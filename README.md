@@ -1,5 +1,5 @@
 # estemoocs
-la plateforme este
+ESTE platform
 
 --Yassine Lahriga and mouloud el arram.
 
