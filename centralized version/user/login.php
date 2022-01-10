@@ -22,7 +22,7 @@
             <h3 class="detail">the best platform to acquire new skills.</h3>
             <input name="email" type="email" value="<?php if (isset($_GET['email'])) echo $_GET['email'];?>" placeholder="Email Adresse" require/>
             <input name="password" type="password" placeholder="Password" require/>
-            <h6>with an account you can like, save and Check courses.</h6>
+            <h6>with an account you can check, save and like or dislike courses.</h6>
             <button type="submit" name="submit">Sign In</button>
             <?php
                 if (isset($_GET['email']) && isset($_GET['password'])){

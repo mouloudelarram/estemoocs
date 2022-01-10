@@ -16,16 +16,22 @@
         }
     } 
     include './database/connection.php';
-    if (isset($_GET['dislike']) && $_GET['dislike'] > 0){
-        for ($i=0; $i<$_GET['dislike'];$i++){
-            addVideo($_SESSION['user']['email'], $_GET['dislike'.$i], "dislike");
-        }
-    }
-    if (isset($_GET['like']) && $_GET['like'] > 0){
-        for ($i=0; $i<$_GET['like'];$i++){
-            addVideo($_SESSION['user']['email'], $_GET['like'.$i], "like");
-        }
-    }
+    // if (isset($_GET['dislike']) && $_GET['dislike'] > 0){
+    //     for ($i=0; $i<$_GET['dislike'];$i++){
+    //         addVideo($_SESSION['user']['email'], $_GET['dislike'.$i], "dislike");
+    //     }
+    // }
+    // if (isset($_GET['like']) && $_GET['like'] > 0){
+    //     for ($i=0; $i<$_GET['like'];$i++){
+    //         addVideo($_SESSION['user']['email'], $_GET['like'.$i], "like");
+    //     }
+    // }
+
+    // if(isset($_GET['video']) && isset($_SESSION['user']['email']))
+    // {
+    //     if(checkIfVidLikes($_SESSION['user']['email'],$_GET['video'])==true) echo 'yep';
+    // }
+    // else echo 'nope';
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +57,7 @@
         </header>
         <div class="main">
             <div class="list"> 
-                <h3>ESTE MOOCS</h3>
+                <h3>Cours disponibles</h3>
                 <div>
                     <div class="loading loading--full-height"></div>
                 </div>
@@ -63,8 +69,8 @@
                     <div class="history">
                         <h4>&larr; go back</h4>
                         <div class="like_dislike">
-                            <i class="fas fa-thumbs-up"></i>
-                            <i class="fas fa-thumbs-down"></i>            
+                            <i class="fas fa-thumbs-up">1</i>
+                            <i class="fas fa-thumbs-down">2</i>            
                         </div>
                     </div>
                     

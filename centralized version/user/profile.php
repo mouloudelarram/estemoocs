@@ -28,6 +28,8 @@
                 $title = str_replace("http://este.ovh/moocs/","",$item['name']);
                 $title = str_replace(".mp4","",$title);
                 $title = str_replace("//"," &rarr; ",$title);
+                $title = str_replace("/","",strrchr($title,"/"));
+                //modifier title to remove the path and only show the actual title [DONE]
                 echo "
                 <div class=\"item\">
                     <div class=\"video\">

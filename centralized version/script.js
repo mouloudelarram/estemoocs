@@ -4,7 +4,21 @@ let dislike = document.querySelectorAll('.like_dislike>i')[1];
 let tableLikes = new Array();
 let tableDisLikes = new Array();
 
+let pressedLike=false;
+let pressedDislike=false;
 like.addEventListener("click",()=>{
+    if(!pressedLike)
+    {
+        pressedLike=true;
+        like.style.color ="#02b3e4";
+        dislike.style.color ="grey";
+    }else{
+        pressedLike=false;
+        like.style.color ="grey";
+        dislike.style.color ="grey";
+    }
+    
+    sendVote(linkVideo,"like");
     if (tableDisLikes.indexOf(linkVideo) != -1){
         let temp = new Array();
         tableDisLikes.forEach(element => {
@@ -19,6 +33,17 @@ like.addEventListener("click",()=>{
         
 });
 dislike.addEventListener("click",()=>{
+    if(!pressedDislike)
+    {
+        pressedDislike=true;
+        like.style.color ="grey";
+        dislike.style.color ="#02b3e4";
+    }else{
+        pressedDislike=false;
+        like.style.color ="grey";
+        dislike.style.color ="grey";
+    }    
+    sendVote(linkVideo,"dislike");
     if (tableLikes.indexOf(linkVideo) != -1){
         let temp =  new Array();
         tableLikes.forEach(element => {
@@ -31,8 +56,19 @@ dislike.addEventListener("click",()=>{
         tableDisLikes.push(linkVideo);
 });
 
-
-document.querySelector(".stack").addEventListener("click",()=>{
+function sendVote(video,vote)
+{
+    let rqst = new XMLHttpRequest();
+    let status;
+    rqst.open("POST","checkLikes.php");
+    
+    rqst.onload = function(){
+           console.log(rqst.responseText);
+    }
+    rqst.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+    rqst.send("video="+video+"&vote="+vote);
+}
+/*document.querySelector(".stack").addEventListener("click",()=>{
     let links= "./index.php?stack="+Stack.length+"&";
     let i=0;
     if (Stack.length>0){
@@ -56,4 +92,4 @@ document.querySelector(".stack").addEventListener("click",()=>{
         location.replace('./index.php');
     }
     
-});
+});*/

@@ -1,6 +1,6 @@
 <?php
     try{
-        $connection = new PDO("mysql:host=sql205.epizy.com;dbname=epiz_29628914_estemoocs","epiz_29628914","");
+        $connection = new PDO("mysql:host=localhost;dbname=estemoocs","root","");
     }catch(PDOException $e){
         $e->getMessage();
     }
@@ -13,6 +13,24 @@
         }catch(PDOException $e){
             $e->getMessage();
             return false;
+        }
+    }
+    function deleteVid($email,$vid)
+    {
+        try{
+            $request =  $GLOBALS['connection']->prepare("DELETE FROM TABLEVIDEO WHERE email=:EM AND name=:NA ");
+            $request->execute(['EM'=>$email, 'NA'=>$vid]);
+        }catch(PDOException $e){
+            $e->getMessage();
+        }
+    }
+    function alterVid($email,$vid,$vote)
+    {
+        try{
+            $request =  $GLOBALS['connection']->prepare("UPDATE TABLEVIDEO SET status=:ST WHERE email=:EM AND name=:NA");
+            $request->execute(['ST'=>$vote,'EM'=>$email, 'NA'=>$vid]);
+        }catch(PDOException $e){
+            $e->getMessage();
         }
     }
     function selectClient($firstname = "", $lastname ="", $email=""){
@@ -52,4 +70,5 @@
             $e->getMessage();
         }
     }
+    
 ?>
