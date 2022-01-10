@@ -19,10 +19,11 @@
         <div class="main">
                 <h1>Create your account</h1>
                 <h3 class="detail">the best platform to acquire new skills.</h3>
-                <input name="firstname" type="text" value="<?php if (isset($_GET['firstname'])) echo $_GET['firstname'];?>"  placeholder="First Name" require/>
-                <input name="lastname" type="text" value="<?php if (isset($_GET['lastname'])) echo $_GET['lastname'];?>"  placeholder="Last Name" require/>
-                <input name="email" type="email" value="<?php if (isset($_GET['email'])) echo $_GET['email'];?>"  placeholder="Email Adresse" require/>
-                <input name="password" type="password" placeholder="Password" require/>
+                <input name="firstname" type="text" value="<?php if (isset($_GET['firstname'])) echo $_GET['firstname'];?>"  placeholder="First Name" required/>
+                <input name="lastname" type="text" value="<?php if (isset($_GET['lastname'])) echo $_GET['lastname'];?>"  placeholder="Last Name" required/>
+                <input name="email" type="email" value="<?php if (isset($_GET['email'])) echo $_GET['email'];?>"  placeholder="Email Adresse" required/>
+                <input name="password" type="password" placeholder="Password" required/>
+                <h6 class="message">To save your trip, press the Save button</h6>
                 <h6>with an account you can like, save and Check courses.</h6>
                 <button type="submit" name="submit">Sign Up</button>
                 <?php

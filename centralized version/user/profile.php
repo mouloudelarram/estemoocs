@@ -17,7 +17,7 @@
             <div class="userData">
                 <h5><?php echo $_SESSION['user']['firstname'].".".$_SESSION['user']['lastname']?></h5>
                 <h5><?php echo $_SESSION['user']['email']?></h5>
-                <a href="../index.php?logout=true"><h5>Log Out</h5></a>
+                <a href="../index.php"><h5>Go Back</h5></a>
             <div>
     </header>
     <div class="videos">
@@ -25,21 +25,21 @@
             include '../database/connection.php';
             $tabelVideos =  selectVideos($_SESSION['user']['email']);
             foreach($tabelVideos as $item ){
-                $title = str_replace("http://este.ovh/moocs/","",$item['name']);
-                $title = str_replace(".mp4","",$title);
-                $title = str_replace("//"," &rarr; ",$title);
-                $title = str_replace("/","",strrchr($title,"/"));
-                //modifier title to remove the path and only show the actual title [DONE]
-                echo "
-                <div class=\"item\">
-                    <div class=\"video\">
-                        <video src=\"".$item['name']."\" autoplay controls muted></video>
+                if ($item['status'] == "like"){
+                    $title = str_replace("http://este.ovh/moocs/","",$item['name']);
+                    $title = str_replace(".mp4","",$title);
+                    $title = str_replace("//"," &rarr; ",$title);
+                    echo "
+                    <div class=\"item\">
+                        <div class=\"video\">
+                            <video src=\"".$item['name']."\" autoplay controls muted></video>
+                        </div>
+                        <div class=\"title\">
+                            ".$title.".
+                        </div>
                     </div>
-                    <div class=\"title\">
-                        ".$title.".
-                    </div>
-                </div>
-                ";
+                    ";
+                }
             }
         ?>
     </div>

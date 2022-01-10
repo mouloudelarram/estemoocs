@@ -15,24 +15,6 @@
             return false;
         }
     }
-    function deleteVid($email,$vid)
-    {
-        try{
-            $request =  $GLOBALS['connection']->prepare("DELETE FROM TABLEVIDEO WHERE email=:EM AND name=:NA ");
-            $request->execute(['EM'=>$email, 'NA'=>$vid]);
-        }catch(PDOException $e){
-            $e->getMessage();
-        }
-    }
-    function alterVid($email,$vid,$vote)
-    {
-        try{
-            $request =  $GLOBALS['connection']->prepare("UPDATE TABLEVIDEO SET status=:ST WHERE email=:EM AND name=:NA");
-            $request->execute(['ST'=>$vote,'EM'=>$email, 'NA'=>$vid]);
-        }catch(PDOException $e){
-            $e->getMessage();
-        }
-    }
     function selectClient($firstname = "", $lastname ="", $email=""){
         try{
             $request =  $GLOBALS['connection']->prepare("SELECT * FROM USERS WHERE firstname = :FN OR lastname = :LN OR email = :EM;");
@@ -51,10 +33,25 @@
             $e->getMessage();
         }
     }
+    function checkIfVideoExist($email, $name){
+        try{
+            $request = $GLOBALS['connection']->prepare("SELECT * FROM TABLEVIDEO WHERE email = :EM AND name = :NA");
+            $request->execute(['EM'=>$email, 'NA'=>$name]);
+            return $request->fetchAll();
+        }catch(PDOException $e){
+            $e->getMessage();
+        }
+    }
     function addVideo($email, $name, $status){
         try{
-            $request =  $GLOBALS['connection']->prepare("INSERT INTO TABLEVIDEO (email, name, status) VALUES(:EM, :NA, :ST)");
-            $request->execute(['EM'=>$email, 'NA'=>$name, 'ST'=>$status]);
+            if (empty(checkIfVideoExist($email,$name))){
+                $request =  $GLOBALS['connection']->prepare("INSERT INTO TABLEVIDEO (email, name, status) VALUES(:EM, :NA, :ST)");
+                $request->execute(['EM'=>$email, 'NA'=>$name, 'ST'=>$status]);
+            }
+            else{
+                $req = $GLOBALS['connection']->prepare('UPDATE TABLEVIDEO SET  status= :ST WHERE email = :EM AND name = :NA');
+                $req->execute(['EM'=>$email,'ST'=>$status, 'NA'=>$name]);
+            }
             return true;
         }catch(PDOException $e){
             $e->getMessage();
@@ -63,12 +60,29 @@
     }
     function selectVideos($email){
         try{
-            $request =  $GLOBALS['connection']->prepare("SELECT * FROM TABLEVIDEO WHERE email = :EM AND status = 'like';");
+            $request =  $GLOBALS['connection']->prepare("SELECT * FROM TABLEVIDEO WHERE email = :EM");
             $request->execute(['EM'=>$email]);
             return $request->fetchAll();
         }catch(PDOException $e){
             $e->getMessage();
         }
     }
-    
+    function selectLikesVideos(){
+        try{
+            $request =  $GLOBALS['connection']->prepare("SELECT DISTINCT name, COUNT(status) AS 'like' FROM tablevideo WHERE status = 'like' GROUP BY name");
+            $request->execute();
+            return $request->fetchAll();
+        }catch(PDOException $e){
+            $e->getMessage();
+        }
+    }
+    function selectDisLikesVideos(){
+        try{
+            $request =  $GLOBALS['connection']->prepare("SELECT DISTINCT name, COUNT(status) AS 'dislike' FROM tablevideo WHERE status = 'dislike' GROUP BY name");
+            $request->execute();
+            return $request->fetchAll();
+        }catch(PDOException $e){
+            $e->getMessage();
+        }
+    }
 ?>

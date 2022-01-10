@@ -20,15 +20,23 @@
         <div class="main">
             <h1>Sign in to your account</h1>
             <h3 class="detail">the best platform to acquire new skills.</h3>
-            <input name="email" type="email" value="<?php if (isset($_GET['email'])) echo $_GET['email'];?>" placeholder="Email Adresse" require/>
-            <input name="password" type="password" placeholder="Password" require/>
-            <h6>with an account you can check, save and like or dislike courses.</h6>
+            <input name="email" type="email"  value="<?php if (isset($_GET['email'])) echo $_GET['email'];?>" placeholder="Email Adresse" required/>
+            <input name="password" type="password"  placeholder="Password" required/>
+            <h6 class="message">To save your trip, press the Save button</h6>
+            <h6 class="ForgotPassword">Forgot your password?</h6>
+            <h6>with an account you can like, save and Check courses.</h6>
             <button type="submit" name="submit">Sign In</button>
+            <div class="Anonymous">
+                <h5>You will not be able to save, like or dislike videos!</h5>
+                <a href="./login.php?Anonymous=Anonymous">
+                    <h5>
+                    Just Take a look &rarr; 
+                    </h5>
+                </a>
+            </div>
             <?php
                 if (isset($_GET['email']) && isset($_GET['password'])){
-                    
                     include '../database/connection.php';
-                    
                     $table = checkIfExist($_GET['email'], $_GET['password']);
                     if (!empty($table)){
                         session_start();                         
@@ -43,8 +51,19 @@
                         echo "<h3 class=\"error\">Please verify your information and try again !<h3>";
                     }
                 }
+                if (isset($_GET['Anonymous'])){
+                    session_start();                         
+                        $_SESSION['user'] = array(
+                            "firstname" => "Anonymous",
+                            "lastname"  => "Anonymous",
+                            "email"     => "Anonymous"
+                        );
+                        header('location:../');
+                }
             ?>
         </div>
     </form>
+    
+    <script src="login.js"></script>
 </body>
 </html>

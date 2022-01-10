@@ -148,3 +148,46 @@ input:focus {
     font-size: 15px;
     text-align: center;
 }
+
+.ForgotPassword{
+    color: #02b3e4;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ForgotPassword:hover{
+    transform: scale(1.1);
+}
+
+.message{
+    color: orangered;
+    padding: 0;
+    margin: 0;
+}
+
+.Anonymous{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+}
+
+.Anonymous:hover h5 {
+    color: #02b3e4;
+}
+.Anonymous >a{
+    padding: 0;
+    min-width: 30%;
+    width: 30%;
+    text-align: right;
+}
+.Anonymous > h5{
+    padding: 0;
+    text-align: center;
+    align-items: center;
+    flex: 1;
+    color: #fff;
+}
