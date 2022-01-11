@@ -62,7 +62,7 @@
             <div class="video">
                 <div>
                     <h3>Welcome.</h3>
-                    <video src="http://este.ovh/moocs/AI/Advanced%20Machine%20Learning%20Specialization/01-intro-to-deep-learning/01_introduction-to-optimization/01_specialization-promo/01_about-the-university.mp4" autoplay controls muted></video>
+                    <video src="./M-learn/UDACITY-LEARN/full-Stack  Development Track/PYTHON-VIDEO/Python-3/1 - Python_ Welcome to strings & lists.mp4" autoplay controls muted></video>
                     <div class="history">
                         <h4>&larr; go back</h4>
                         <div class="like_dislike">

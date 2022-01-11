@@ -1,60 +1,70 @@
 let list = document.querySelector(".list > div");
-let tree = new Array();
-let link = "http://este.ovh/moocs/";
+let link = "./M-learn/"; // or ./moocs/...
 let Stack = new Array();
+
+
+let tree = new Array();
 let treeStack = new Array();
-let linkVideo = "http://este.ovh/moocs/AI/Advanced Machine Learning Specialization/01-intro-to-deep-learning/01_introduction-to-optimization/01_specialization-promo/01_about-the-university.mp4";
-let lastIdVideo = "01_about-the-university.mp4";
+let linkVideo = "./M-learn/UDACITY-LEARN/full-Stack  Development Track/PYTHON-VIDEO/Python-3/3 - Python_ Handling more complex strings.mp4";
+let lastIdVideo = "3 - Python_ Handling more complex strings.mp4";
 let index = 1;
 let paths =["ESTE MOOCS"];
+
+
+
+
 function fillOnList(tree){
     list.innerHTML =  "";
     for (item in tree){
         list.innerHTML += `
             <div id="${item}" name="" class="item">
                 <div class="icon">+</div>
-                <div class="title">${item.replaceAll("_"," ")}</div>
+                <div class="title">${item}</div>
             </div>`;
     };
-    linkTolesson()
+    linkTolesson();
 }
-
 
 function linkTolesson(){
     document.querySelectorAll(".item").forEach(element => {
-        element.addEventListener("click",()=>{    
+        element.addEventListener("click",()=>{
             if (element.id.includes(".mp4")){
-                document.querySelector("video").setAttribute('src',link+element.id);
+                document.querySelector("video").setAttribute('src',link+"/"+element.id);
                 document.querySelector("video").muted = false;
                 document.querySelector("video").autoplay = true;
                 document.querySelector(".video > div >h3").innerHTML =  element.id;
-                lastIdVideo = element.id;
-                linkVideo = link+element.id;
-            }      
-            else if (!(element.id).includes("/") && (element.id).localeCompare(".mp4") ){
-                open(`${link}/${element.id}`);
-            }   
+                lastIdVideo = "/"+element.id;
+                linkVideo = link+lastIdVideo;
+            }                
             else{
-                paths.push(element.id.slice(0,element.id.length-1));
+                
+                document.querySelector(".list>h3").innerHTML = element.id;
                 var item= {
                     list : tree,
                     ads: link
                 };
+                link+="/"+element.id;
                 Stack.push(item);
-                let infotemp = element.id.replaceAll("_"," ");
-                document.querySelector(".list>h3").innerHTML =  infotemp;
-                link+=element.id;    
-                lastId =element.id;           
                 tree=tree[element.id];
-                getTree(`./tools/root.php?root=${link}`);
+                fillOnList(tree);
 
-            }
+                paths.push(element.id.slice(0,element.id.length-1));
+                let infotemp = element.id.replaceAll("_"," ");
+                document.querySelector(".list>h3").innerHTML =  infotemp; 
+                lastId =element.id;
+            }  
             sendLinks();
             getNumberOfLikes(linkVideo);
             checkStatus(linkVideo);
             lastVideo();
         });
     });
+}
+
+function getLastPage(){
+    Stack.forEach(index=>{
+        fillOnList(index);
+    })
 }
 
 document.querySelector("h4").addEventListener("click",()=>{
@@ -69,8 +79,8 @@ document.querySelector("h4").addEventListener("click",()=>{
         link = ob.ads;
     }
     sendLinks();
-        
-})
+});
+
 
 /* send links (stack) and video by ajax to index to fill on session */
 function sendLinks(){
@@ -87,7 +97,7 @@ function sendLinks(){
     links += "link"+i+"="+link+"&";
 
     reqst.onload = function(){
-        //console.log("links send");
+       /*  console.log("links send"); */
     }    
     reqst.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     reqst.send(links);
@@ -166,7 +176,7 @@ function sendLike(video){
     let reqst = new XMLHttpRequest();
     reqst.open("POST","./tools/like.php");
     reqst.onload = function(){
-        //console.log("send Like");
+       /*  console.log("send Like"); */
         getNumberOfLikes(linkVideo);
     }
     reqst.setRequestHeader("Content-type","application/x-www-form-urlencoded")
@@ -180,7 +190,7 @@ function sendDisLike(video){
     let reqst = new XMLHttpRequest();
     reqst.open("POST","./tools/dislike.php");
     reqst.onload = function(){
-        /* console.log("send disLike"); */
+       /*  console.log("send disLike"); */
         getNumberOfLikes(linkVideo);
     }
     reqst.setRequestHeader("Content-type","application/x-www-form-urlencoded")
@@ -194,7 +204,7 @@ function sendStatus(video){
     let reqst = new XMLHttpRequest();
     reqst.open("POST","./tools/like.php");
     reqst.onload = function(){
-       /*  console.log("send status"); */
+        /* console.log("send status"); */
         getNumberOfLikes(linkVideo);
     }
     reqst.setRequestHeader("Content-type","application/x-www-form-urlencoded")

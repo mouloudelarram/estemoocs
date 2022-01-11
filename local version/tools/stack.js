@@ -1,3 +1,4 @@
+let temp = "./M-learn//";
 function getTree(adresse){
     let rqst = new XMLHttpRequest();
     list.innerHTML = "<center><div class=\"loading loading--full-height\"></div></center>";
@@ -5,16 +6,21 @@ function getTree(adresse){
     rqst.onload = function(){
         if (rqst.status == 200 && rqst.readyState == 4){
             tree = JSON.parse(rqst.response);
-            fillOnList(tree);
-            if (treeStack.length>0){
+            
+            while (treeStack.length>0){
                 var item= {
                     list : tree,
                     ads: link
                 };
                 Stack.push(item);
                 link= treeStack[0];
-                getTree(`./tools/root.php?root=${treeStack.shift()}`);
-                
+                let t = link.replace(temp,"");
+                t= t.replaceAll("/","");
+                fillOnList(tree[t]);
+                tree= tree[t];
+                temp = link;
+                //getTree(`./tools/root.php?root=${treeStack.shift()}`);
+                treeStack.shift();
             }
         }
     }
@@ -40,7 +46,6 @@ function getStack(adresse){
                 getTree(`./tools/root.php?root=${treeStack.shift()}`);
             }
         }
-        
     }
     rqst.send();
 };
