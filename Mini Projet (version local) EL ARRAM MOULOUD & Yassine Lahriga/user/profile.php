@@ -1,5 +1,9 @@
 <?php
     session_start();
+    include '../database/connection.php';
+    if (isset($_GET['remove']) && isset($_GET['videoremove'])){
+        addVideo($_SESSION['user']['email'], $_GET['videoremove'], "null");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +26,6 @@
     </header>
     <div class="videos">
         <?php
-            include '../database/connection.php';
             $tabelVideos =  selectVideos($_SESSION['user']['email']);
             foreach($tabelVideos as $item ){
                 if ($item['status'] == "like"){
@@ -38,6 +41,7 @@
                         <div class=\"title\">
                             ".$title.".
                         </div>
+                        <a href=\"./profile.php?remove=remove&videoremove=".$item['name']."\" class=\"remove\">-</a>
                     </div>
                     ";
                 }

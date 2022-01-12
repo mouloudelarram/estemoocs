@@ -7,20 +7,28 @@ function getTree(adresse){
         if (rqst.status == 200 && rqst.readyState == 4){
             tree = JSON.parse(rqst.response);
             
-            while (treeStack.length>0){
-                var item= {
-                    list : tree,
-                    ads: link
-                };
-                Stack.push(item);
-                link= treeStack[0];
-                let t = link.replace(temp,"");
-                t= t.replaceAll("/","");
-                fillOnList(tree[t]);
-                tree= tree[t];
-                temp = link;
-                //getTree(`./tools/root.php?root=${treeStack.shift()}`);
-                treeStack.shift();
+            if (treeStack.length>0){
+                while (treeStack.length>1){
+                    treeStack.shift();
+                    var item= {
+                        list : tree,
+                        ads: link
+                    };
+                    Stack.push(item);
+                    link= treeStack[0];
+                    let t = link.replace(temp,"");
+                    t= t.replaceAll("/","");
+                    
+                    console.log(t);
+                    console.log(link);
+                    fillOnList(tree[t]);
+                    tree= tree[t];
+                    temp = link;
+                    //getTree(`./tools/root.php?root=${treeStack.shift()}`);
+                    
+                }
+            }else{
+                fillOnList(tree);
             }
         }
     }
@@ -45,6 +53,8 @@ function getStack(adresse){
                 document.querySelector(".video > div >h3").innerHTML =  infoVideo;
                 getTree(`./tools/root.php?root=${treeStack.shift()}`);
             }
+            else
+                getTree(`./tools/root.php`);
         }
     }
     rqst.send();

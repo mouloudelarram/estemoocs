@@ -299,9 +299,9 @@ h4:hover{
       }
     .list > div {
         display: flex;
-        max-width: 100%;
-        width: 100%;
-        min-width: 100%;
+        max-width: 85%;
+        width: 85%;
+        min-width: 85%;
         margin: 1%;
         padding: 5%;
     }
