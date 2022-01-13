@@ -9,3 +9,5 @@ ESTE platform
 --the centralized version doesn't need a local directory because it connects with http://este.ovh/moocs/ (it reads data from there) .
 
 --the centralized version is in service on http://elarram.rf.gd/este/
+
+--the local version is in service on http://elarram.rf.gd/moocs/
